@@ -1,0 +1,14 @@
+C:\Users\Pipi\Desktop\41\Dan_XLI_Nemanja_Pilipovic\Zadatak_1\bin\Debug\Zadatak_1.exe.config
+C:\Users\Pipi\Desktop\41\Dan_XLI_Nemanja_Pilipovic\Zadatak_1\bin\Debug\Zadatak_1.exe
+C:\Users\Pipi\Desktop\41\Dan_XLI_Nemanja_Pilipovic\Zadatak_1\bin\Debug\Zadatak_1.pdb
+C:\Users\Pipi\Desktop\41\Dan_XLI_Nemanja_Pilipovic\Zadatak_1\obj\Debug\Zadatak_1.csprojAssemblyReference.cache
+C:\Users\Pipi\Desktop\41\Dan_XLI_Nemanja_Pilipovic\Zadatak_1\obj\Debug\MainWindow.g.cs
+C:\Users\Pipi\Desktop\41\Dan_XLI_Nemanja_Pilipovic\Zadatak_1\obj\Debug\App.g.cs
+C:\Users\Pipi\Desktop\41\Dan_XLI_Nemanja_Pilipovic\Zadatak_1\obj\Debug\Zadatak_1_MarkupCompile.cache
+C:\Users\Pipi\Desktop\41\Dan_XLI_Nemanja_Pilipovic\Zadatak_1\obj\Debug\Zadatak_1_MarkupCompile.lref
+C:\Users\Pipi\Desktop\41\Dan_XLI_Nemanja_Pilipovic\Zadatak_1\obj\Debug\MainWindow.baml
+C:\Users\Pipi\Desktop\41\Dan_XLI_Nemanja_Pilipovic\Zadatak_1\obj\Debug\Zadatak_1.g.resources
+C:\Users\Pipi\Desktop\41\Dan_XLI_Nemanja_Pilipovic\Zadatak_1\obj\Debug\Zadatak_1.Properties.Resources.resources
+C:\Users\Pipi\Desktop\41\Dan_XLI_Nemanja_Pilipovic\Zadatak_1\obj\Debug\Zadatak_1.csproj.GenerateResource.cache
+C:\Users\Pipi\Desktop\41\Dan_XLI_Nemanja_Pilipovic\Zadatak_1\obj\Debug\Zadatak_1.exe
+C:\Users\Pipi\Desktop\41\Dan_XLI_Nemanja_Pilipovic\Zadatak_1\obj\Debug\Zadatak_1.pdb

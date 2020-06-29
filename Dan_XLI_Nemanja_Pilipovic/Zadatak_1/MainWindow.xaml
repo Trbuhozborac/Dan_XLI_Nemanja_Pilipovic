@@ -5,51 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Zadatak_1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="858.909">
     <Grid Margin="0,0,473,0">
         <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="20"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="20"/>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
-            <TextBlock Name="txtblTextForPrinting" Grid.Column="1" Grid.Row="1" Text="Text for Printing" Width="150" Height="30" Margin="57,1,10,0"></TextBlock>
-            <TextBox Name="txbTextForPrinting" Grid.Column="1" Grid.Row="2" Height="200" Width="200" Text="{Binding TextForPrinting, UpdateSourceTrigger=PropertyChanged}"/>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="20"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Name="txtblTextForPrinting" Grid.Column="1" Grid.Row="1" Text="Text for Printing" Width="150" Height="30" Margin="57,1,10,0"></TextBlock>
+        <TextBox Name="txbTextForPrinting" Grid.Column="1" Grid.Row="2" Height="200" Width="200" Text="{Binding TextForPrinting, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <TextBlock Name="txtblNumberOfCopy" Grid.Row="4" Text="Number of Copy:" Width="150" Height="30" Margin="10,18,41,-10" Grid.RowSpan="4" Grid.Column="1"/>
-            <TextBox Name="txbNumberOfCopy" Grid.Column="1" Grid.Row="5" Width="50" Height="30" Margin="117,10,49,-1" Grid.RowSpan="3"
-                 RenderTransformOrigin="0.183,0.568" Text="{Binding NumberOfCopy, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Name="txtblNumberOfCopy" Grid.Row="4" Text="Number of Copy:" Width="150" Height="30" Margin="10,18,41,-10" Grid.RowSpan="4" Grid.Column="1"/>
+        <TextBox Name="txbNumberOfCopy" Grid.Column="1" Grid.Row="5" Width="50" Height="30" Margin="117,10,49,-1" Grid.RowSpan="3"
+                 RenderTransformOrigin="0.183,0.568" Text="{Binding NumberOfCopy, UpdateSourceTrigger=PropertyChanged}" 
+                     PreviewTextInput="NumberValidationTextBox"/>
 
-            <ProgressBar x:Name="prgPrintingProgress" HorizontalAlignment="Left" Height="23" Margin="16,90,0,-22" Grid.Row="7" VerticalAlignment="Top" 
+        <ProgressBar x:Name="prgPrintingProgress" HorizontalAlignment="Left" Height="23" Margin="16,90,0,-22" Grid.Row="7" VerticalAlignment="Top" 
                      Width="217" Grid.ColumnSpan="2" RenderTransformOrigin="0.529,1.583"
-                     Value="{Binding ProgressBar, UpdateSourceTrigger=PropertyChanged}"/>
+                     Value="{Binding CurrentProgress, UpdateSourceTrigger=PropertyChanged}"/>
 
-            <Button x:Name="btnPrint" Content="Print" Grid.Column="1" HorizontalAlignment="Left" Margin="0,119,0,-59" Grid.Row="7" VerticalAlignment="Top" Width="76"  Command="{Binding PrintText, UpdateSourceTrigger=PropertyChanged}"/>
-            <Button x:Name="btnCancel" Content="Cancel" Grid.Column="1" HorizontalAlignment="Left" Margin="131,119,0,-47" Grid.Row="7" VerticalAlignment="Top" Width="76" RenderTransformOrigin="-0.513,-0.441"
-                Command="{Binding Close, UpdateSourceTrigger=PropertyChanged}"/>
-            <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="78,72,0,0" Grid.Row="7" TextWrapping="Wrap" Text="Progress:" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="56">
-                <TextBlock.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="0.091"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </TextBlock.RenderTransform>
-            </TextBlock>
-        </Grid>
+        <Button x:Name="btnPrint" Content="Print" Grid.Column="1" HorizontalAlignment="Left" Margin="0,119,0,-59" Grid.Row="7" VerticalAlignment="Top" Width="76"  Command="{Binding Print, UpdateSourceTrigger=PropertyChanged}"/>
+        <Button x:Name="btnCancel" Content="Cancel" Grid.Column="1" HorizontalAlignment="Left" Margin="131,119,0,-47" Grid.Row="7" VerticalAlignment="Top" Width="76" RenderTransformOrigin="-0.513,-0.441"
+                Command="{Binding Cancel, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBlock Grid.Column="1" HorizontalAlignment="Left" Margin="78,72,0,0" Grid.Row="7" TextWrapping="Wrap" Text="Progress:" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" Width="56">
+            <TextBlock.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.091"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </TextBlock.RenderTransform>
+        </TextBlock>
+    </Grid>
 </Window>
