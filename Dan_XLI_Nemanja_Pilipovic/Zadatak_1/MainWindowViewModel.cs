@@ -13,6 +13,10 @@ namespace Zadatak_1
         private readonly BackgroundWorker bgWorker = new BackgroundWorker();
         private bool _isRunning = false;
 
+        /// <summary>
+        /// Main window calling functions for progress bar
+        /// </summary>
+        /// <param name="mainOpen">Main window</param>
         public MainWindowViewModel(MainWindow mainOpen)
         {
             main = mainOpen;
@@ -68,11 +72,17 @@ namespace Zadatak_1
             }
         }
 
+        /// <summary>
+        /// Checks if worker progress is changed
+        /// </summary>
         private void WorkerOnProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             CurrentProgress = e.ProgressPercentage;            
         }
 
+        /// <summary>
+        /// Worker printing documants
+        /// </summary>
         private void WorkerOnDoWork(object sender, DoWorkEventArgs e)
         {
             string fileName = "";
@@ -114,6 +124,9 @@ namespace Zadatak_1
             }
         }
 
+        /// <summary>
+        /// Tell the user that worker completed doing he's job
+        /// </summary>
         private void WorkerOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Cancelled)
@@ -146,6 +159,9 @@ namespace Zadatak_1
             }
         }
 
+        /// <summary>
+        /// Checks if filed for Number of Copy is null, white space or empty
+        /// </summary>
         private bool CanPrintExecute()
         {
             if (String.IsNullOrEmpty(TextForPrinting) || String.IsNullOrEmpty(NumberOfCopy)
@@ -159,6 +175,9 @@ namespace Zadatak_1
             }
         }
 
+        /// <summary>
+        /// If user press print button again after 1st time we notift the use that printing is active
+        /// </summary>
         private void PrintExecute()
         {
             if (!bgWorker.IsBusy)

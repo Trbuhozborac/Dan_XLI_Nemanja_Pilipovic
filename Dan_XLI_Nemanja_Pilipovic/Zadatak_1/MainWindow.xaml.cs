@@ -15,6 +15,9 @@ namespace Zadatak_1
             this.DataContext = new MainWindowViewModel(this);
         }
 
+        /// <summary>
+        /// Validation for number input
+        /// </summary>
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
             Regex regex = new Regex("[^0-9]+");
