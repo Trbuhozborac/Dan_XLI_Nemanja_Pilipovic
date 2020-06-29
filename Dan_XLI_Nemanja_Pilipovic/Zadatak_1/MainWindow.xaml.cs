@@ -1,5 +1,6 @@
-﻿using System;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Zadatak_1
 {
@@ -11,6 +12,13 @@ namespace Zadatak_1
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainWindowViewModel(this);
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }

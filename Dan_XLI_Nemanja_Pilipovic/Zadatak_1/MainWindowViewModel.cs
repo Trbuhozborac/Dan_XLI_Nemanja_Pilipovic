@@ -15,7 +15,6 @@ namespace Zadatak_1
         public MainWindowViewModel(MainWindow main)
         {
             main = mainOpen;
-            bgWorker.DoWork += Print;
             bgWorker.ProgressChanged += PopulateProgressBar;
             bgWorker.WorkerReportsProgress = true;
             bgWorker.WorkerSupportsCancellation = true;
@@ -28,7 +27,7 @@ namespace Zadatak_1
             MessageBox.Show("Completed!");
         }
 
-        private void Print(object sender, DoWorkEventArgs e)
+        private void Print()
         {
             int number = Convert.ToInt32(numberOfCopy);
             for (int i = 0; i < number; i++)
@@ -41,7 +40,6 @@ namespace Zadatak_1
                 {
                     sw.Write(TextForPrinting);
                 }
-                bgWorker.ReportProgress(number / i * 100);
             }
 
             MessageBox.Show("Text Printed Succesfully!");
@@ -100,13 +98,14 @@ namespace Zadatak_1
         private void PrintTextExecute()
         {
             CanClose = true;
-            //Thread thread = new Thread(() => Print(TextForPrinting, NumberOfCopy));
-            //thread.Start();
+            Thread thread = new Thread(() => Print());
+            thread.Start();
         }
 
         private bool CanPrintTextExecute()
         {
-            if (TextForPrinting == null || NumberOfCopy == null || int.Parse(NumberOfCopy) == 0)
+            if (String.IsNullOrEmpty(TextForPrinting) || String.IsNullOrEmpty(NumberOfCopy) || 
+                String.IsNullOrWhiteSpace(TextForPrinting) || String.IsNullOrWhiteSpace(NumberOfCopy))
             {
                 return false;
             }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Zadatak_1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="858.909">
     <Grid Margin="0,0,473,0">
         <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20"/>
@@ -32,7 +32,8 @@
 
             <TextBlock Name="txtblNumberOfCopy" Grid.Row="4" Text="Number of Copy:" Width="150" Height="30" Margin="10,18,41,-10" Grid.RowSpan="4" Grid.Column="1"/>
             <TextBox Name="txbNumberOfCopy" Grid.Column="1" Grid.Row="5" Width="50" Height="30" Margin="117,10,49,-1" Grid.RowSpan="3"
-                 RenderTransformOrigin="0.183,0.568" Text="{Binding NumberOfCopy, UpdateSourceTrigger=PropertyChanged}"/>
+                 RenderTransformOrigin="0.183,0.568" Text="{Binding NumberOfCopy, UpdateSourceTrigger=PropertyChanged}" 
+                     PreviewTextInput="NumberValidationTextBox"/>
 
             <ProgressBar x:Name="prgPrintingProgress" HorizontalAlignment="Left" Height="23" Margin="16,90,0,-22" Grid.Row="7" VerticalAlignment="Top" 
                      Width="217" Grid.ColumnSpan="2" RenderTransformOrigin="0.529,1.583"
