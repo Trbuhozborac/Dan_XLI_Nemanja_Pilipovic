@@ -9,60 +9,27 @@ namespace Zadatak_1
 {
     class MainWindowViewModel : BaseViewModel
     {
-        BackgroundWorker bgWorker = new BackgroundWorker();
-        bool CanClose;
-        MainWindow mainOpen;
-        public MainWindowViewModel(MainWindow main)
+        readonly MainWindow main;
+        private readonly BackgroundWorker bgWorker = new BackgroundWorker();
+        private bool _isRunning = false;
+
+        public MainWindowViewModel(MainWindow mainOpen)
         {
             main = mainOpen;
-            bgWorker.ProgressChanged += PopulateProgressBar;
+            bgWorker.DoWork += WorkerOnDoWork;
             bgWorker.WorkerReportsProgress = true;
             bgWorker.WorkerSupportsCancellation = true;
+            bgWorker.ProgressChanged += WorkerOnProgressChanged;
             bgWorker.RunWorkerCompleted += WorkerOnRunWorkerCompleted;
-
         }
-
-        private void WorkerOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            MessageBox.Show("Completed!");
-        }
-
-        private void Print()
-        {
-            int number = Convert.ToInt32(numberOfCopy);
-            for (int i = 0; i < number; i++)
-            {
-                Thread.Sleep(1000);
-                string fileName = i + "." + DateTime.Now.Day.ToString() + "_" + DateTime.Now.Month.ToString() + "_" + DateTime.Now.Year.ToString() + "_"
-                    + DateTime.Now.Hour.ToString() + "_" + DateTime.Now.Minute.ToString();
-                string location = $@"~\..\..\..\{fileName}.txt";
-                using (StreamWriter sw = new StreamWriter(location))
-                {
-                    sw.Write(TextForPrinting);
-                }
-            }
-
-            MessageBox.Show("Text Printed Succesfully!");
-        }
-
-        private int progressBar;
-
-        public int ProgressBar
-        {
-            get { return progressBar; }
-            set
-            {
-                progressBar = value;
-                OnPropertyChanged("ProgressBar");
-            }
-        }
-
 
         private string textForPrinting;
-
         public string TextForPrinting
         {
-            get { return textForPrinting; }
+            get
+            {
+                return textForPrinting;
+            }
             set
             {
                 textForPrinting = value;
@@ -71,41 +38,118 @@ namespace Zadatak_1
         }
 
         private string numberOfCopy;
-
         public string NumberOfCopy
         {
-            get { return numberOfCopy; }
+            get
+            {
+                return numberOfCopy;
+            }
             set
             {
                 numberOfCopy = value;
                 OnPropertyChanged("NumberOfCopy");
             }
         }
-
-        private ICommand printText;
-        public ICommand PrintText
+       
+        private int currentProgress;
+        public int CurrentProgress
         {
             get
             {
-                if (printText == null)
+                return currentProgress;
+            }
+            set
+            {
+                if (currentProgress != value)
                 {
-                    printText = new RelayCommand(param => PrintTextExecute(), param => CanPrintTextExecute());
+                    currentProgress = value;
+                    OnPropertyChanged("CurrentProgress");
                 }
-                return printText;
             }
         }
 
-        private void PrintTextExecute()
+        private void WorkerOnProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            CanClose = true;
-            Thread thread = new Thread(() => Print());
-            thread.Start();
+            CurrentProgress = e.ProgressPercentage;            
         }
 
-        private bool CanPrintTextExecute()
+        private void WorkerOnDoWork(object sender, DoWorkEventArgs e)
         {
-            if (String.IsNullOrEmpty(TextForPrinting) || String.IsNullOrEmpty(NumberOfCopy) || 
-                String.IsNullOrWhiteSpace(TextForPrinting) || String.IsNullOrWhiteSpace(NumberOfCopy))
+            string fileName = "";
+            
+            for (int i = 1; i < int.Parse(NumberOfCopy) + 1; i++)
+            {
+                Thread.Sleep(1000);
+                if (bgWorker.CancellationPending)
+                {
+                    e.Cancel = true;
+                   
+                    bgWorker.ReportProgress(0);
+                    return;
+                }
+
+                fileName = i + "." + DateTime.Now.Day + "_" + DateTime.Now.Month + "_" +
+                    DateTime.Now.Year + "_" + DateTime.Now.Hour + "_" + DateTime.Now.Minute;
+
+                using (StreamWriter streamWriter = new StreamWriter(fileName, append: true))
+                {
+                    streamWriter.WriteLine(TextForPrinting);
+                }
+
+                if (i == int.Parse(NumberOfCopy))
+                {             
+                    bgWorker.ReportProgress(100);
+                }
+                else
+                {
+                    bgWorker.ReportProgress(Convert.ToInt32(Math.Round(100 / double.Parse(NumberOfCopy))) * i);
+                }
+            }
+
+            _isRunning = false;
+
+            if (bgWorker.IsBusy)
+            {
+                bgWorker.CancelAsync();
+            }
+        }
+
+        private void WorkerOnRunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (e.Cancelled)
+            {
+              
+                _isRunning = false;
+            }
+            else if (e.Error != null)
+            {
+               
+                _isRunning = false;
+            }
+            else if (CurrentProgress == 100)
+            {               
+                _isRunning = false;
+                MessageBox.Show("Finished printing " + NumberOfCopy + " documents.");
+            }
+        }
+
+        private ICommand print;
+        public ICommand Print
+        {
+            get
+            {
+                if (print == null)
+                {
+                    print = new RelayCommand(param => PrintExecute(), param => CanPrintExecute());
+                }
+                return print;
+            }
+        }
+
+        private bool CanPrintExecute()
+        {
+            if (String.IsNullOrEmpty(TextForPrinting) || String.IsNullOrEmpty(NumberOfCopy)
+                || String.IsNullOrWhiteSpace(TextForPrinting) || String.IsNullOrWhiteSpace(NumberOfCopy))
             {
                 return false;
             }
@@ -115,27 +159,35 @@ namespace Zadatak_1
             }
         }
 
-        private ICommand close;
-        public ICommand Close
+        private void PrintExecute()
         {
-            get
+            if (!bgWorker.IsBusy)
             {
-                if (close == null)
-                {
-                    close = new RelayCommand(param => CloseExecute(), param => CanCloseExecute());
-                }
-                return close;
+                bgWorker.RunWorkerAsync();
+                _isRunning = true;
+            }
+            else
+            {
+                MessageBox.Show("Printer already printing...");
             }
         }
 
-        private void CloseExecute()
+        private ICommand cancel;
+        public ICommand Cancel
         {
-            //TODO stopirati workera
+            get
+            {
+                if (cancel == null)
+                {
+                    cancel = new RelayCommand(param => CancelExecute(), param => CanCancelExecute());
+                }
+                return cancel;
+            }
         }
 
-        private bool CanCloseExecute()
+        private bool CanCancelExecute()
         {
-            if (CanClose == true)
+            if (_isRunning == true)
             {
                 return true;
             }
@@ -145,9 +197,13 @@ namespace Zadatak_1
             }
         }
 
-        private void PopulateProgressBar(object o, ProgressChangedEventArgs e)
+        private void CancelExecute()
         {
-            ProgressBar = e.ProgressPercentage;
+            if (bgWorker.IsBusy)
+            {
+                bgWorker.CancelAsync();
+                _isRunning = false;
+            }
         }
     }
 }
